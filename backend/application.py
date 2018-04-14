@@ -1,12 +1,10 @@
 from flask import Flask, jsonify, request
 from werkzeug.exceptions import NotFound, InternalServerError
-import geojson_loader
-import initializer
+from backend import geojson_loader
+from backend import initializer
 
 
 app = Flask(__name__)
-
-available_ratings = list()
 
 
 @app.route('/api/availableRatings', methods=['GET'])
@@ -37,6 +35,7 @@ def get_rating(rating_id: int):
         raise InternalServerError("GeoJSON could not be loaded")
 
 
+available_ratings = initializer.load_available_ratings()
+
 if __name__ == "__main__":
-    available_ratings = initializer.load_available_ratings()
     app.run(debug=True)

@@ -8,13 +8,19 @@ with import <nixpkgs> {}; let
         sha256 = "06ihcb8839zzgk5jcv18kc6nqld4hhj3nk4f3drzcr8n8893v1y8";
       };
     };
+
+  backend = with python36.pkgs;
+    buildPythonPackage {
+      name = "backend";
+      doCheck = false;
+      src = ./.;
+      propagatedBuildInputs = [ flask geojson ];
+    };
 in
 (python3.withPackages (
   pkgs: with pkgs;
   [
-    flask
-    geojson
-
+    backend
     # dev requirements
     pytest
     pytest-sugar

@@ -1,4 +1,4 @@
-from model.availablerating import AvailableRating, TimeInterval
+from .model.availablerating import AvailableRating
 
 
 # TODO import from some config file
