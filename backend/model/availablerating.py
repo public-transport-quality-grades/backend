@@ -30,3 +30,9 @@ class AvailableRating:
             'typeOfDay': self.type_of_day,
             'timeInterval': self.time_interval.serialize()
         }
+
+    @staticmethod
+    def create_from_config(id_: int, rating: dict):
+        day = datetime.strptime(rating['dueDate'], '%Y-%m-%d')
+        time_interval = TimeInterval(rating['timeIntervalDescription'], rating['start_time'], rating['end_time'])
+        return AvailableRating(id_, day, rating['typeOfDay'], time_interval, rating['pathToGeoJson'])

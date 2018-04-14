@@ -1,4 +1,3 @@
-from datetime import datetime
 from model.availablerating import AvailableRating, TimeInterval
 
 
@@ -10,7 +9,7 @@ available_ratings = [
         'timeIntervalDescription': 'Tag',
         'start_time': '08:00',
         'end_time': '20:00',
-        'pathToGeoJson': '/home/robin/osm/oevgk18_wochentag_tag.json'
+        'pathToGeoJson': '/home/robin/Documents/ResidenceConan/backend/tests/resources/test_geojson.geojson'
     },
     {
         'dueDate': '2018-04-14',
@@ -18,18 +17,12 @@ available_ratings = [
         'timeIntervalDescription': 'Abend',
         'start_time': '20:00',
         'end_time': '00:00',
-        'pathToGeoJson': '/home/robin/osm/oevgk18_samstag_abend.json'
+        'pathToGeoJson': '/home/robin/osm/oevgk18_samstag_abend.geojson'
     }
 ]
 
 
-def create_available_rating(id_: int, rating: dict):
-    day = datetime.strptime(rating['dueDate'], '%Y-%m-%d')
-    time_interval = TimeInterval(rating['timeIntervalDescription'], rating['start_time'], rating['end_time'])
-    return AvailableRating(id_, day, rating['typeOfDay'], time_interval, rating['pathToGeoJson'])
-
-
 def load_available_ratings() -> list:
     numbered_ratings = zip(range(len(available_ratings)), available_ratings)
-    ratings = map(lambda r: create_available_rating(r[0], r[1]), numbered_ratings)
+    ratings = map(lambda rating: AvailableRating.create_from_config(*rating), numbered_ratings)
     return list(ratings)
