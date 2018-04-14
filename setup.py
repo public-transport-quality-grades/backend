@@ -16,5 +16,4 @@ setup(
     license="MIT License",
     packages=find_packages(exclude=('tests')),
     install_requires=['flask'], 
-    }
 )
