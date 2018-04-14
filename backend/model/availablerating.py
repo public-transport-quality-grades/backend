@@ -1,21 +1,9 @@
 from datetime import datetime
-
-
-class TimeInterval:
-    def __init__(self, time_description: str, start: str, end: str):
-        self.time_description = time_description
-        self.start = start
-        self.end = end
-
-    def serialize(self) -> dict:
-        return {
-            'timeDescription': self.time_description,
-            'start': self.start,
-            'end': self.end
-        }
+from .timeinterval import TimeInterval
 
 
 class AvailableRating:
+
     def __init__(self, id_: int, day: datetime, type_of_day: str, time_interval: TimeInterval, data_path: str):
         self.id_ = id_
         self.day = day
