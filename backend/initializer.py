@@ -7,18 +7,34 @@ available_ratings = [
         'dueDate': '2018-04-12',
         'typeOfDay': 'Wochentag',
         'timeIntervalDescription': 'Tag',
-        'start_time': '08:00',
+        'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': '/home/robin/Documents/ResidenceConan/backend/tests/resources/test_geojson.geojson'
+        'pathToGeoJson': 'tests/resources/rapperswil.geojson'
+    },
+    {
+        'dueDate': '2018-04-10',
+        'typeOfDay': 'Wochentag',
+        'timeIntervalDescription': 'Abend',
+        'start_time': '20:00',
+        'end_time': '00:00',
+        'pathToGeoJson': 'tests/resources/uster.geojson'
     },
     {
         'dueDate': '2018-04-14',
         'typeOfDay': 'Samstag',
-        'timeIntervalDescription': 'Abend',
-        'start_time': '20:00',
-        'end_time': '00:00',
-        'pathToGeoJson': '/home/robin/osm/oevgk18_samstag_abend.geojson'
-    }
+        'timeIntervalDescription': 'Tag',
+        'start_time': '06:00',
+        'end_time': '20:00',
+        'pathToGeoJson': 'tests/resources/hardbruecke.geojson'
+    },
+    {
+        'dueDate': '2018-04-15',
+        'typeOfDay': 'Sonntag',
+        'timeIntervalDescription': 'Nacht',
+        'start_time': '00:00',
+        'end_time': '04:00',
+        'pathToGeoJson': 'tests/resources/zurich.geojson'
+    },
 ]
 
 
