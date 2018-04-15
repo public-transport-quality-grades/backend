@@ -20,7 +20,7 @@ def get_available_ratings():
 @app.route('/api/availableDays', methods=['GET'])
 def get_available_days():
     unique_days = set([rating.type_of_day for rating in available_ratings])
-    return jsonify(list(unique_days))
+    return jsonify({'days':list(unique_days)})
 
 
 @app.route('/api/rating/<int:rating_id>', methods=['GET'])
