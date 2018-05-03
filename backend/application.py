@@ -3,6 +3,7 @@ from werkzeug.exceptions import NotFound, InternalServerError
 from backend import geojson_loader
 from backend import initializer
 
+OEVGK_ARE_PATH = 'data/Oev_Gueteklassen_ARE.json'
 
 app = Flask(__name__)
 
@@ -35,7 +36,18 @@ def get_rating(rating_id: int):
         raise InternalServerError("GeoJSON could not be loaded")
 
 
+@app.route('/api/oeVGKARE', methods=['GET'])
+def get_oevgk_are_data():
+    try:
+        geojson_data = geojson_loader.load_geojson(OEVGK_ARE_PATH)
+        return jsonify(geojson_data)
+    except ValueError as ex:
+        print(ex)
+        raise InternalServerError("GeoJSON could not be loaded")
+
+
 available_ratings = initializer.load_available_ratings()
+initializer.check_oevgk_are_data(OEVGK_ARE_PATH)
 
 if __name__ == "__main__":
     app.run(debug=True)
