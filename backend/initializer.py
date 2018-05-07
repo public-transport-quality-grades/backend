@@ -1,4 +1,5 @@
 from .model.availablerating import AvailableRating
+from . import geojson_loader
 
 
 # TODO import from some config file
@@ -42,3 +43,10 @@ def load_available_ratings() -> list:
     numbered_ratings = zip(range(len(available_ratings)), available_ratings)
     ratings = map(lambda rating: AvailableRating.create_from_config(*rating), numbered_ratings)
     return list(ratings)
+
+
+def check_oevgk_are_data(path):
+    try:
+        geojson_loader.load_geojson(path)
+    except ValueError:
+        print(f"WARNING: Ratings from ARE not found or invalid, path {path}")
