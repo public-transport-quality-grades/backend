@@ -10,7 +10,7 @@ available_ratings = [
         'timeIntervalDescription': 'Tag',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'tests/resources/rapperswil.geojson'
+        'pathToGeoJson': 'data/rapperswil.geojson'
     },
     {
         'dueDate': '2018-04-10',
@@ -18,7 +18,7 @@ available_ratings = [
         'timeIntervalDescription': 'Abend',
         'start_time': '20:00',
         'end_time': '00:00',
-        'pathToGeoJson': 'tests/resources/uster.geojson'
+        'pathToGeoJson': 'data/uster.geojson'
     },
     {
         'dueDate': '2018-04-14',
@@ -26,7 +26,7 @@ available_ratings = [
         'timeIntervalDescription': 'Tag',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'tests/resources/hardbruecke.geojson'
+        'pathToGeoJson': 'data/hardbruecke.geojson'
     },
     {
         'dueDate': '2018-04-15',
@@ -34,7 +34,7 @@ available_ratings = [
         'timeIntervalDescription': 'Nacht',
         'start_time': '00:00',
         'end_time': '04:00',
-        'pathToGeoJson': 'tests/resources/zurich.geojson'
+        'pathToGeoJson': 'data/zurich.geojson'
     },
 ]
 
