@@ -5,37 +5,54 @@ from . import geojson_loader
 # TODO import from some config file
 available_ratings = [
     {
-        'dueDate': '2018-04-12',
-        'typeOfDay': 'Wochentag',
-        'timeIntervalDescription': 'Tag',
+        'dueDate': '2018-11-13',
+        'typeOfDay': 'Working Day',
+        'timeIntervalDescription': 'Day',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'data/rapperswil.geojson'
+        'pathToGeoJson': 'data/oevgk18_2018-11-13_Day.json'
     },
     {
-        'dueDate': '2018-04-10',
-        'typeOfDay': 'Wochentag',
-        'timeIntervalDescription': 'Abend',
+        'dueDate': '2018-11-13',
+        'typeOfDay': 'Working Day',
+        'timeIntervalDescription': 'Evening',
         'start_time': '20:00',
         'end_time': '00:00',
-        'pathToGeoJson': 'data/uster.geojson'
+        'pathToGeoJson': 'data/oevgk18_2018-11-13_Evening.json'
     },
     {
-        'dueDate': '2018-04-14',
-        'typeOfDay': 'Samstag',
-        'timeIntervalDescription': 'Tag',
+        'dueDate': '2018-11-10',
+        'typeOfDay': 'Saturday',
+        'timeIntervalDescription': 'Day',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'data/hardbruecke.geojson'
+        'pathToGeoJson': 'data/oevgk18_2018-11-10_Day.json'
     },
     {
-        'dueDate': '2018-04-15',
-        'typeOfDay': 'Sonntag',
-        'timeIntervalDescription': 'Nacht',
-        'start_time': '00:00',
+        'dueDate': '2018-11-10',
+        'typeOfDay': 'Saturday',
+        'timeIntervalDescription': 'Night',
+        'start_time': '01:00',
         'end_time': '04:00',
-        'pathToGeoJson': 'data/zurich.geojson'
+        'pathToGeoJson': 'data/oevgk18_2018-11-10_Night.json'
     },
+    {
+        'dueDate': '2018-11-18',
+        'typeOfDay': 'Sunday',
+        'timeIntervalDescription': 'Day',
+        'start_time': '06:00',
+        'end_time': '20:00',
+        'pathToGeoJson': 'data/oevgk18_2018-11-18_Day.json'
+    },
+
+    {
+        'dueDate': '2018-11-18',
+        'typeOfDay': 'Sunday',
+        'timeIntervalDescription': 'Night',
+        'start_time': '01:00',
+        'end_time': '04:00',
+        'pathToGeoJson': 'data/oevgk18_2018-11-18_Night.json'
+    }
 ]
 
 
