@@ -10,7 +10,7 @@ available_ratings = [
         'timeIntervalDescription': 'Day',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-13_Day.json'
+        'pathToGeoJson': 'data/oevgk18_2018-11-13_Day.geojson'
     },
     {
         'dueDate': '2018-11-13',
@@ -18,7 +18,7 @@ available_ratings = [
         'timeIntervalDescription': 'Evening',
         'start_time': '20:00',
         'end_time': '00:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-13_Evening.json'
+        'pathToGeoJson': 'data/oevgk18_2018-11-13_Evening.geojson'
     },
     {
         'dueDate': '2018-11-10',
@@ -26,7 +26,7 @@ available_ratings = [
         'timeIntervalDescription': 'Day',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-10_Day.json'
+        'pathToGeoJson': 'data/oevgk18_2018-11-10_Day.geojson'
     },
     {
         'dueDate': '2018-11-10',
@@ -34,7 +34,7 @@ available_ratings = [
         'timeIntervalDescription': 'Night',
         'start_time': '01:00',
         'end_time': '04:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-10_Night.json'
+        'pathToGeoJson': 'data/oevgk18_2018-11-10_Night.geojson'
     },
     {
         'dueDate': '2018-11-18',
@@ -42,7 +42,7 @@ available_ratings = [
         'timeIntervalDescription': 'Day',
         'start_time': '06:00',
         'end_time': '20:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-18_Day.json'
+        'pathToGeoJson': 'data/oevgk18_2018-11-18_Day.geojson'
     },
 
     {
@@ -51,7 +51,7 @@ available_ratings = [
         'timeIntervalDescription': 'Night',
         'start_time': '01:00',
         'end_time': '04:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-18_Night.json'
+        'pathToGeoJson': 'data/oevgk18_2018-11-18_Night.geojson'
     }
 ]
 
