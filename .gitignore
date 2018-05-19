@@ -105,3 +105,9 @@ ENV/
 
 # intellij
 .idea/
+
+# vscode
+.vscode/
+
+# json data files
+/data
