@@ -35,11 +35,11 @@ def get_rating(rating_id: int):
         print(ex)
         raise InternalServerError("GeoJSON could not be loaded")
 
-
 @app.route('/api/oeVGKARE', methods=['GET'])
 def get_oevgk_are_data():
     try:
         geojson_data = geojson_loader.load_geojson(OEVGK_ARE_PATH)
+        geojson_data['features'].sort(key=lambda feature: feature['properties']['KLASSE'], reverse=True)
         return jsonify(geojson_data)
     except ValueError as ex:
         print(ex)
