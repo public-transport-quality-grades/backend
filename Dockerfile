@@ -21,5 +21,5 @@ USER backenduser
 
 EXPOSE 8080
 
-CMD ["uwsgi", "--socket", "0.0.0.0:8080", "--master", "--manage-script-name", "--mount", "/=backend.application:app"]
+CMD ["uwsgi", "--socket", "0.0.0.0:8080", "--master", "--manage-script-name", "--mount", "/=backend.app:app"]
 

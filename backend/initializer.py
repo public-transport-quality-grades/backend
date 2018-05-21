@@ -1,69 +1,58 @@
-from .model.availablerating import AvailableRating
+from typing import Dict, List
+from datetime import datetime
+from os import listdir
+from os.path import isfile, join, splitext
+from .model.availablegrading import AvailableGrading
 from . import geojson_loader
 
 
-# TODO import from some config file
-available_ratings = [
-    {
-        'dueDate': '2018-11-13',
-        'typeOfDay': 'Working Day',
-        'timeIntervalDescription': 'Day',
-        'start_time': '06:00',
-        'end_time': '20:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-13_Day.geojson'
-    },
-    {
-        'dueDate': '2018-11-13',
-        'typeOfDay': 'Working Day',
-        'timeIntervalDescription': 'Evening',
-        'start_time': '20:00',
-        'end_time': '00:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-13_Evening.geojson'
-    },
-    {
-        'dueDate': '2018-11-10',
-        'typeOfDay': 'Saturday',
-        'timeIntervalDescription': 'Day',
-        'start_time': '06:00',
-        'end_time': '20:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-10_Day.geojson'
-    },
-    {
-        'dueDate': '2018-11-10',
-        'typeOfDay': 'Saturday',
-        'timeIntervalDescription': 'Night',
-        'start_time': '01:00',
-        'end_time': '04:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-10_Night.geojson'
-    },
-    {
-        'dueDate': '2018-11-18',
-        'typeOfDay': 'Sunday',
-        'timeIntervalDescription': 'Day',
-        'start_time': '06:00',
-        'end_time': '20:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-18_Day.geojson'
-    },
-
-    {
-        'dueDate': '2018-11-18',
-        'typeOfDay': 'Sunday',
-        'timeIntervalDescription': 'Night',
-        'start_time': '01:00',
-        'end_time': '04:00',
-        'pathToGeoJson': 'data/oevgk18_2018-11-18_Night.geojson'
-    }
-]
-
-
-def load_available_ratings() -> list:
-    numbered_ratings = zip(range(len(available_ratings)), available_ratings)
-    ratings = map(lambda rating: AvailableRating.create_from_config(*rating), numbered_ratings)
-    return list(ratings)
+def load_available_gradings(data_folder: str) -> Dict[AvailableGrading, str]:
+    geojson_paths = _get_geojson_paths(data_folder)
+    numbered_geojson_paths = zip(range(1, len(geojson_paths) + 1), geojson_paths)
+    return {_load_grading_from_geojson(*numbered_file): numbered_file[1] for numbered_file in numbered_geojson_paths}
 
 
 def check_oevgk_are_data(path):
     try:
         geojson_loader.load_geojson(path)
     except ValueError:
-        print(f"WARNING: Ratings from ARE not found or invalid, path {path}")
+        print(f"WARNING: Gradings from ARE not found or invalid, path {path}")
+
+
+def _get_geojson_paths(data_folder: str) -> List[str]:
+    all_files = [f for f in listdir(data_folder) if isfile(join(data_folder, f))]
+    geojson_files = filter(_is_oevgk18_file, all_files)
+    return list(map(lambda filename: join(data_folder, filename), geojson_files))
+
+
+def _is_oevgk18_file(file_path: str) -> bool:
+    file_name, file_ext = splitext(file_path)
+    if not (file_ext == '.json' or file_ext == '.geojson'):
+        return False
+    return file_name.startswith('oevgk18')
+
+
+def _load_grading_from_geojson(identifier: int, geojson_path: str) -> AvailableGrading:
+    grading_data = geojson_loader.load_geojson(geojson_path)
+    time_interval = {
+        'time_description': _get_grading_attribute(geojson_path, grading_data, 'type-of-interval'),
+        'start': datetime.strptime(_get_grading_attribute(geojson_path, grading_data, 'lower-bound'), '%H:%M').time(),
+        'end': datetime.strptime(_get_grading_attribute(geojson_path, grading_data, 'upper-bound'), '%H:%M').time()
+    }
+
+    due_datetime = datetime.strptime(
+        _get_grading_attribute(geojson_path, grading_data, 'due-date'), '%Y-%m-%dT%H:%M:%S')
+    grading = {
+        'id': identifier,
+        'due_date': due_datetime.date,
+        'type_of_day': _get_grading_attribute(geojson_path, grading_data, 'type-of-day'),
+        'time_interval': time_interval,
+    }
+
+    return AvailableGrading(**grading)
+
+
+def _get_grading_attribute(filename: str, grading_data: dict, attribute: str) -> str:
+    if attribute not in grading_data:
+        raise AttributeError(f"Attribute {attribute} not found in OeVGK18 file {filename}")
+    return grading_data[attribute]

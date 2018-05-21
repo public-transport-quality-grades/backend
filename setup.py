@@ -15,5 +15,5 @@ setup(
     url='https://github.com/public-transport-quality-grades/backend',
     license="MIT License",
     packages=find_packages(exclude=('tests')),
-    install_requires=['flask'], 
+    install_requires=['flask', 'flasgger', 'marshmallow', 'apispec', 'geojson'], 
 )
