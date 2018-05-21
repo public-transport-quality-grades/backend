@@ -61,13 +61,16 @@ def get_available_days():
            200:
                description: A list of types of days for which there are gradings
                schema:
-                   type: array
-                   items:
-                     type: string
+                   type: object
+                   properties:
+                      days:
+                          type: array
+                          items:
+                              type: string
        """
     unique_days = set([grading.type_of_day for grading in available_gradings.keys()])
 
-    return jsonify(list(unique_days))
+    return jsonify({'days': list(unique_days)})
 
 
 @app.route('/api/gradings/<int:grading_id>', methods=['GET'])
@@ -114,7 +117,22 @@ template = spec.to_flasgger(
     paths=[get_available_gradings, get_available_days, get_grading, get_oevgk_are_data]
 )
 
-swag = Swagger(app, template=template)
+swagger_config = {
+    "headers": [],
+    "specs": [
+            {
+                "endpoint": 'apispec_1',
+                "route": '/api/apispec_1.json',
+                "rule_filter": lambda rule: True,  # all in
+                "model_filter": lambda tag: True,  # all in
+            }
+        ],
+        "static_url_path": "/apidocs/flasgger_static",
+        "swagger_ui": True,
+        "specs_route": "/apidocs/"
+}
+
+swag = Swagger(app, template=template, config=swagger_config)
 
 if __name__ == "__main__":
     app.run(debug=True)
