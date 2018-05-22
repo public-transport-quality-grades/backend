@@ -9,12 +9,42 @@ with import <nixpkgs> {}; let
       };
     };
 
+  apispec = with python36.pkgs;
+    buildPythonPackage {
+    name = "apispec-0.37.0";
+    doCheck = false;
+    propagatedBuildInputs = [
+      pyyaml
+    ];
+    src = fetchurl {
+      url = "https://files.pythonhosted.org/packages/d3/20/7af547f84c131a6a856146a5cf2c341f99250293aa87ef56668f88d705b3/apispec-0.37.0.tar.gz";
+      sha256 = "1ly6r56kr1r9ggx9fr1x5x42awmsr4kdmvlv7bmyxb1bkri2xsbm";
+    };
+  };
+
+  flasgger = with python36.pkgs;
+    buildPythonPackage {
+    name = "flasgger-0.8.3";
+    doCheck = false;
+    propagatedBuildInputs = [
+      flask
+      pyyaml
+      jsonschema
+      mistune
+      six
+    ];
+    src = fetchurl {
+      url = "https://files.pythonhosted.org/packages/61/40/9874c6235c832e34d4ba208a90d92b7fca2e73ea10b52b7e6fcc2ccfe384/flasgger-0.8.3.tar.gz";
+      sha256 = "0c7r5iiz92kfs70s82m6sc3yp742z0xk1g6n587d6fn48s77km70";
+    };
+  };
+
   backend = with python36.pkgs;
     buildPythonPackage {
       name = "backend";
       doCheck = false;
       src = ./.;
-      propagatedBuildInputs = [ flask geojson ];
+      propagatedBuildInputs = [ flask marshmallow flasgger apispec  geojson ];
     };
 in
 (python3.withPackages (

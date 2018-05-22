@@ -1,0 +1,12 @@
+Get all types of days (working day, saturday, sunday, etc.) for which there are gradings
+---
+responses:
+   200:
+       description: A list of types of days for which there are gradings
+       schema:
+           type: object
+           properties:
+              days:
+                  type: array
+                  items:
+                      type: string
