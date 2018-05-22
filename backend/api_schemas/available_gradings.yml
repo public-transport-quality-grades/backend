@@ -1,0 +1,13 @@
+Get all available gradings for a specific type of day (e.g. "Working Day", "Saturday", ...).
+---
+parameters:
+  - name: typeOfDay
+    description: Type of day to filter for, e.g. Working Day, Saturday
+    in: query
+    type: string
+    required: false
+responses:
+    200:
+        description: An available grading
+        schema:
+            $ref: '#/definitions/AvailableGrading'

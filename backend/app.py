@@ -27,19 +27,7 @@ spec = APISpec(
 @app.route('/api/gradings', methods=['GET'])
 def get_available_gradings():
     """
-    Get all available gradings for a specific type of day (e.g. "Working Day", "Saturday", ...).
-    ---
-    parameters:
-      - name: typeOfDay
-        description: Type of day to filter for, e.g. Working Day, Saturday
-        in: query
-        type: string
-        required: false
-    responses:
-        200:
-            description: An available grading
-            schema:
-                $ref: '#/definitions/AvailableGrading'
+    file: api_schemas/available_gradings.yml
     """
     type_of_day = request.args.get('typeOfDay')
     gradings = available_gradings.keys()
@@ -55,19 +43,8 @@ def get_available_gradings():
 @app.route('/api/typesOfDays', methods=['GET'])
 def get_available_days():
     """
-       Get all types of days (working day, saturday, sunday, etc.) for which there are gradings
-       ---
-       responses:
-           200:
-               description: A list of types of days for which there are gradings
-               schema:
-                   type: object
-                   properties:
-                      days:
-                          type: array
-                          items:
-                              type: string
-       """
+    file: api_schemas/typesOfDays.yml
+    """
     unique_days = set([grading.type_of_day for grading in available_gradings.keys()])
 
     return jsonify({'days': list(unique_days)})
@@ -76,7 +53,7 @@ def get_available_days():
 @app.route('/api/gradings/<int:grading_id>', methods=['GET'])
 def get_grading(grading_id: int):
     """
-    file: yaml_schemas/grading.yml
+    file: api_schemas/grading.yml
     """
     if grading_id < 1 or grading_id > len(available_gradings):
         print("Erorr not found")
@@ -96,7 +73,7 @@ def get_grading(grading_id: int):
 @app.route('/api/oevkgARE', methods=['GET'])
 def get_oevgk_are_data():
     """
-    file: yaml_schemas/oevgkARE.yml
+    file: api_schemas/oevgkARE.yml
     """
     try:
         geojson_data = geojson_loader.load_geojson(OEVGK_ARE_PATH)
@@ -120,16 +97,16 @@ template = spec.to_flasgger(
 swagger_config = {
     "headers": [],
     "specs": [
-            {
-                "endpoint": 'apispec_1',
-                "route": '/api/apispec_1.json',
-                "rule_filter": lambda rule: True,  # all in
-                "model_filter": lambda tag: True,  # all in
-            }
-        ],
-        "static_url_path": "/apidocs/flasgger_static",
-        "swagger_ui": True,
-        "specs_route": "/apidocs/"
+        {
+            "endpoint": 'apispec',
+            "route": '/api/apispec.json',
+            "rule_filter": lambda rule: True,  # all in
+            "model_filter": lambda tag: True,  # all in
+        }
+    ],
+    "static_url_path": "/apidocs/flasgger_static",
+    "swagger_ui": True,
+    "specs_route": "/apidocs/"
 }
 
 swag = Swagger(app, template=template, config=swagger_config)
