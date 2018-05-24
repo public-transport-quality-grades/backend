@@ -1,7 +1,7 @@
 from typing import List
 from flask import Flask, request, jsonify
 from flasgger import APISpec, Swagger
-from werkzeug.exceptions import InternalServerError
+from werkzeug.exceptions import InternalServerError, NotFound, BadRequest
 from backend import initializer
 from backend.schemas import AvailableGradingSchema
 from backend.model.availablegrading import AvailableGrading
@@ -39,9 +39,11 @@ def get_available_gradings():
     """
     type_of_day = request.args.get('typeOfDay')
     if not type_of_day:
-        raise ValueError("Invalid typeOfDay")
+        raise BadRequest("Missing typeOfDay")
 
     gradings = list(filter(lambda grading: grading.type_of_day == type_of_day, available_gradings))
+    if not gradings:
+        raise NotFound("Invalid typeOfDay ")
 
     result_schema = AvailableGradingSchema(only=('id', 'due_date', 'type_of_day', 'tile_name', 'time_interval'))
 
