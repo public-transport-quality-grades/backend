@@ -1,16 +1,14 @@
-from typing import Dict
+from typing import List
 from flask import Flask, request, jsonify
 from flasgger import APISpec, Swagger
-from werkzeug.exceptions import NotFound, InternalServerError
+from werkzeug.exceptions import InternalServerError
 from backend import initializer
 from backend.schemas import AvailableGradingSchema
 from backend.model.availablegrading import AvailableGrading
 from backend import geojson_loader
 
-
+OEVGK18_METADATA_PATH = 'data/oevgk18_metadata.json'
 OEVGK_ARE_PATH = 'data/Oev_Gueteklassen_ARE.json'
-
-DATA_PATH = 'data'
 
 app = Flask(__name__)
 
@@ -24,50 +22,31 @@ spec = APISpec(
 )
 
 
+@app.route('/api/typesOfDays', methods=['GET'])
+def get_available_days():
+    """
+    file: api_schemas/typesOfDays.yml
+    """
+    unique_days = set([grading.type_of_day for grading in available_gradings])
+
+    return jsonify({'days': list(unique_days)})
+
+
 @app.route('/api/gradings', methods=['GET'])
 def get_available_gradings():
     """
     file: api_schemas/available_gradings.yml
     """
     type_of_day = request.args.get('typeOfDay')
-    gradings = available_gradings.keys()
-    if type_of_day:
-        gradings = list(filter(lambda grading: grading.type_of_day == type_of_day, gradings))
+    if not type_of_day:
+        raise ValueError("Invalid typeOfDay")
 
-    result_schema = AvailableGradingSchema(only=('id', 'due_date', 'type_of_day', 'time_interval'))
+    gradings = list(filter(lambda grading: grading.type_of_day == type_of_day, available_gradings))
+
+    result_schema = AvailableGradingSchema(only=('id', 'due_date', 'type_of_day', 'tile_name', 'time_interval'))
 
     result = list([result_schema.dump(grading).data for grading in gradings])
     return jsonify(result)
-
-
-@app.route('/api/typesOfDays', methods=['GET'])
-def get_available_days():
-    """
-    file: api_schemas/typesOfDays.yml
-    """
-    unique_days = set([grading.type_of_day for grading in available_gradings.keys()])
-
-    return jsonify({'days': list(unique_days)})
-
-
-@app.route('/api/gradings/<int:grading_id>', methods=['GET'])
-def get_grading(grading_id: int):
-    """
-    file: api_schemas/grading.yml
-    """
-    if grading_id < 1 or grading_id > len(available_gradings):
-        print("Erorr not found")
-        print(len(available_gradings))
-        raise NotFound("Grading not found")
-    try:
-        found_grading = list(filter(lambda g: g.id == grading_id, available_gradings.keys()))
-        if not found_grading:
-            raise InternalServerError(f"No grading with ID {grading_id} registered")
-        geojson_data = geojson_loader.load_geojson(available_gradings[found_grading[0]])
-        return jsonify(geojson_data)
-    except ValueError as ex:
-        print(ex)
-        raise InternalServerError("GeoJSON could not be loaded")
 
 
 @app.route('/api/oevkgARE', methods=['GET'])
@@ -84,14 +63,14 @@ def get_oevgk_are_data():
         raise InternalServerError("GeoJSON could not be loaded")
 
 
-available_gradings: Dict[AvailableGrading, str] = initializer.load_available_gradings(DATA_PATH)
+available_gradings: List[AvailableGrading] = initializer.load_available_gradings(OEVGK18_METADATA_PATH)
 
 initializer.check_oevgk_are_data(OEVGK_ARE_PATH)
 
 template = spec.to_flasgger(
     app,
     definitions=[AvailableGradingSchema],
-    paths=[get_available_gradings, get_available_days, get_grading, get_oevgk_are_data]
+    paths=[get_available_gradings, get_available_days, get_oevgk_are_data]
 )
 
 swagger_config = {
