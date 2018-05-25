@@ -11,4 +11,5 @@ class AvailableGradingSchema(Schema):
     id = fields.Integer(required=True)
     due_date = fields.Date(required=True)
     type_of_day = fields.String(required=True)
+    tile_name = fields.String(required=True)
     time_interval = fields.Nested(TimeIntervalSchema, required=True)
