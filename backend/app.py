@@ -39,7 +39,7 @@ def get_available_gradings():
     """
     type_of_day = request.args.get('typeOfDay')
     if not type_of_day:
-        raise BadRequest("Missing typeOfDay")
+        raise BadRequest("Missing parameter typeOfDay")
 
     gradings = list(filter(lambda grading: grading.type_of_day == type_of_day, available_gradings))
     if not gradings:
@@ -51,7 +51,7 @@ def get_available_gradings():
     return jsonify(result)
 
 
-@app.route('/api/oevkgARE', methods=['GET'])
+@app.route('/api/oevgkARE', methods=['GET'])
 def get_oevgk_are_data():
     """
     file: api_schemas/oevgkARE.yml

@@ -7,10 +7,7 @@ from . import geojson_loader, json_loader
 
 def load_available_gradings(oevgk18_metadata_path) -> List[AvailableGrading]:
     oevgk18_metadata = json_loader.load_json(oevgk18_metadata_path)
-    available_gradings = []
-    for generated_grading in oevgk18_metadata['generated-gradings']:
-        available_gradings.append(_parse_grading_data(generated_grading))
-    return available_gradings
+    return list(map(_parse_grading_data, oevgk18_metadata['generated-gradings']))
 
 
 def check_oevgk_are_data(path):

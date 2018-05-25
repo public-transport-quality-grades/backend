@@ -5,9 +5,11 @@ parameters:
     description: Type of day to filter for, e.g. Working Day, Saturday
     in: query
     type: string
-    required: false
+    required: true
 responses:
     200:
         description: An available grading
         schema:
             $ref: '#/definitions/AvailableGrading'
+    400:
+        description: Parameter typeOfDay is missing
