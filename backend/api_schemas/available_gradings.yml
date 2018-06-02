@@ -13,3 +13,5 @@ responses:
             $ref: '#/definitions/AvailableGrading'
     400:
         description: Parameter typeOfDay is missing
+    404:
+        description: No gradings for this type of day found

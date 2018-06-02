@@ -2,19 +2,12 @@ from typing import List
 from datetime import datetime
 from os.path import splitext, basename
 from .model.availablegrading import AvailableGrading
-from . import geojson_loader, json_loader
+from . import json_loader
 
 
 def load_available_gradings(oevgk18_metadata_path) -> List[AvailableGrading]:
     oevgk18_metadata = json_loader.load_json(oevgk18_metadata_path)
     return list(map(_parse_grading_data, oevgk18_metadata['generated-gradings']))
-
-
-def check_oevgk_are_data(path):
-    try:
-        geojson_loader.load_geojson(path)
-    except ValueError:
-        print(f"WARNING: Gradings from ARE not found or invalid, path {path}")
 
 
 def _parse_grading_data(generated_grading: dict) -> AvailableGrading:
