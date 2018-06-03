@@ -1,9 +1,7 @@
 from setuptools import setup, find_packages
 
-
 with open('README.md', encoding='utf-8') as f:
     readme = f.read()
-
 
 setup(
     name='oevgk18_backend',
@@ -15,5 +13,5 @@ setup(
     url='https://github.com/public-transport-quality-grades/backend',
     license="MIT License",
     packages=find_packages(exclude=('tests')),
-    install_requires=['flask', 'flasgger', 'marshmallow', 'apispec', 'geojson'], 
+    install_requires=['flask', 'flasgger', 'marshmallow', 'apispec', 'geojson'],
 )

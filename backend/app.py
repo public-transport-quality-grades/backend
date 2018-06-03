@@ -1,11 +1,12 @@
 from typing import List
-from flask import Flask, request, jsonify
-from flasgger import APISpec, Swagger
-from werkzeug.exceptions import InternalServerError, NotFound, BadRequest
-from backend import initializer
-from backend.schemas import AvailableGradingSchema
-from backend.model.availablegrading import AvailableGrading
 
+from flasgger import APISpec, Swagger
+from flask import Flask, request, jsonify
+from werkzeug.exceptions import NotFound, BadRequest
+
+from backend import initializer
+from backend.model.availablegrading import AvailableGrading
+from backend.schemas import AvailableGradingSchema
 
 OEVGK18_METADATA_PATH = 'data/oevgk18_metadata.json'
 
