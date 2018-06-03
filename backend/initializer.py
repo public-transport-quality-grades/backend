@@ -1,8 +1,9 @@
-from typing import List
 from datetime import datetime
 from os.path import splitext, basename
-from .model.availablegrading import AvailableGrading
+from typing import List
+
 from . import json_loader
+from .model.availablegrading import AvailableGrading
 
 
 def load_available_gradings(oevgk18_metadata_path) -> List[AvailableGrading]:

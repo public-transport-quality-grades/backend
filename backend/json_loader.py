@@ -1,5 +1,5 @@
-from os import path
 import json
+from os import path
 
 
 def load_json(file_path: str) -> dict:
