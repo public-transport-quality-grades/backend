@@ -1,4 +1,5 @@
-Get all available gradings for a specific type of day (e.g. "Working Day", "Saturday", ...).
+available gradings
+Get all available gradings for a specific type of day (working day, saturday, sunday, etc.).
 ---
 parameters:
   - name: typeOfDay
